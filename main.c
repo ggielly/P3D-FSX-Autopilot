@@ -13,7 +13,6 @@ int button1_oldVal=LOW;
 int button2_oldVal=LOW;
 int button3_oldVal=LOW;
 
-
 short menuPage=-1; // Splash screen
 const int totPages=6;
 char menuPages[][16]={
@@ -24,35 +23,25 @@ char menuPages[][16]={
     "Heading",
     "Altitude",
     "V. Speed"
-
 };
-
 
 int values[6]={0,0,0,0,0,0};
 
-
 bool editing=false;
-
 
 boolean serialStarted=false;
 short curr_index=0; 
 int temp_val[6]={0,0,0,0,0,0};
 
-
 void setup() {
   pinMode(2,INPUT);
   pinMode(3,INPUT);
   pinMode(4,INPUT);
-  
+  //
   pinMode(7,OUTPUT);
   pinMode(6,OUTPUT);
   lcd.begin(16, 2);
   Serial.begin(9600);
-  
-  
-  
-
-  
 }
 
 void loop() {
@@ -66,10 +55,7 @@ void loop() {
   int button2_val = button2.read();  
   int button3_val = button3.read();  
   
-  
-  
-  
-  // ############# LED
+ // ############# LED
     if(values[0]) // Enable bit
      digitalWrite(7,HIGH);
    else
@@ -85,8 +71,7 @@ void loop() {
   
   // ************ SECOND ROW
 
-  
-  lcd.setCursor(0,1);
+    lcd.setCursor(0,1);
   int value=getValue();
   switch(menuPage){
       case -1: // Main
@@ -101,14 +86,12 @@ void loop() {
         break;
   }
   
-  
-  if(buttonIsPressed(button1.read(), &button1_oldVal))  
+    if(buttonIsPressed(button1.read(), &button1_oldVal))  
       if(menuPage<totPages-1){
           lcd.clear();
           menuPage++;
         }
-  
-  if(buttonIsPressed(button2.read(), &button2_oldVal))  
+    if(buttonIsPressed(button2.read(), &button2_oldVal))  
       if(menuPage>-1){
           lcd.clear();
           menuPage--;
@@ -154,8 +137,7 @@ int getValue() {
     case 5: // Vertical Speed
       return (int)((analogRead(0)/1023.0*4000.0-2000.0)/100.0)*100;
       break;
-    
-    
+  
   }
 }
 
@@ -201,7 +183,6 @@ void loadValues() {
     values[cont]=temp_val[cont];
   
 }
-
 
 boolean buttonIsPressed(int buttValue, int* buttOldVal) {
    if(buttValue!= *buttOldVal){
